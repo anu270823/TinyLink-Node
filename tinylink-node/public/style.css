@@ -1,0 +1,14 @@
+body {
+  background: url('/images/body-bg2.avif') no-repeat center center fixed;
+  background-size: cover;
+}
+.bg-white.p-4.rounded.shadow{
+    border:3px solid black;
+    border-radius: 8px;
+}
+.stats-box {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+}

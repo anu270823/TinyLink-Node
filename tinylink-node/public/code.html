@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Link Stats</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+   
+  <div class="container">
+
+    <h1>Short Link Analytics</h1>
+
+    <div class="stats-box">
+
+      <p><strong>Short URL:</strong>
+        <a id="shortUrl" target="_blank"></a>
+      </p>
+
+      <p><strong>Destination URL:</strong>
+        <a id="targetUrl" target="_blank"></a>
+      </p>
+
+      <p><strong>Total Clicks:</strong>
+        <span id="clicks"></span>
+      </p>
+
+      <p><strong>Created At:</strong>
+        <span id="created"></span>
+      </p>
+
+      <p><strong>Last Clicked:</strong>
+        <span id="lastClicked"></span>
+      </p>
+
+    </div>
+
+    <button id="deleteBtn" class="delete-btn">Delete Link</button>
+
+  </div>
+
+<script>
+(async function(){
+
+  const code = window.location.pathname.split('/')[2];
+
+  function format(t){
+    return t ? new Date(t).toLocaleString() : "—";
+  }
+
+  async function loadStats(){
+    try {
+      const r = await fetch('/api/links/' + code + '?t=' + Date.now());
+      if (!r.ok) return;
+      const d = await r.json();
+
+      document.getElementById("shortUrl").textContent = d.short_url;
+      document.getElementById("shortUrl").href = d.short_url;
+
+      document.getElementById("targetUrl").textContent = d.url;
+      document.getElementById("targetUrl").href = d.url;
+
+      document.getElementById("clicks").textContent = d.clicks;
+
+      document.getElementById("created").textContent = format(d.created_at);
+      document.getElementById("lastClicked").textContent = format(d.last_clicked);
+
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  // first load
+  loadStats();
+
+  // auto refresh every second
+  setInterval(loadStats, 1000);
+
+
+  // delete button
+  document.getElementById("deleteBtn").onclick = async () => {
+    if (confirm("Delete this link?")) {
+      await fetch('/api/links/' + code, { method:'DELETE' });
+      alert("Link deleted");
+      window.location.href = "/";
+    }
+  };
+
+})();
+</script>
+
+</body>
+</html>

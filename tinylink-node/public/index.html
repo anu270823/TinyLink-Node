@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>TinyLink - Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- Tailwind CDN for quick styling -->
+   <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <div class="max-w-5xl mx-auto p-6">
+    <header class="mb-6">
+      <h1 class="text-2xl font-bold">TinyLink — Dashboard</h1>
+      <p class="text-sm text-gray-600">Create short links, view stats, and delete links.</p>
+    </header>
+
+    <section id="create" class="bg-white p-4 rounded shadow mb-6">
+      <h2 class="font-semibold mb-2">Create Short Link</h2>
+      <form id="createForm" class="flex flex-col md:flex-row gap-3">
+        <input id="url" type="url" placeholder="https://example.com/very/long/url" required class="p-2 border rounded flex-1"/>
+        <input id="code" placeholder="custom code (optional, 6-8 alnum)" class="p-2 border rounded w-48" />
+        <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Create</button>
+      </form>
+      <p id="msg" class="text-sm mt-2"></p>
+    </section>
+
+    <section class="bg-white p-4 rounded shadow">
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="font-semibold">All Links</h2>
+        <input id="search" placeholder="Search by code or URL" class="p-2 border rounded w-64" />
+      </div>
+
+      <div id="tableWrap" class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="text-left text-gray-600">
+            <tr>
+              <th class="p-2">Short</th>
+              <th class="p-2">Target URL</th>
+              <th class="p-2">Clicks</th>
+              <th class="p-2">Last clicked</th>
+              <th class="p-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="linksTbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+
+
+  <script src="/app.js"></script>
+</body>
+</html>
